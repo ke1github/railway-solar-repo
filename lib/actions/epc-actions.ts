@@ -333,6 +333,15 @@ export async function getEPCProjectById(projectId: string) {
 
 export async function getEPCDashboardStats() {
   try {
+    // Check if MongoDB URI is available
+    if (!process.env.MONGODB_URI) {
+      return {
+        success: false,
+        error: 'Database connection not available',
+        stats: null
+      };
+    }
+    
     await connectToDatabase();
 
     // Project overview statistics

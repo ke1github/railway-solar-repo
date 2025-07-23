@@ -97,6 +97,21 @@ This is a production system for railway solar management. All changes should be 
 
 ## Deploy on Vercel
 
+To deploy this application on Vercel:
+
+1. **Set up environment variables in Vercel**:
+   - Go to your Vercel project settings
+   - Add `MONGODB_URI` environment variable with your MongoDB Atlas connection string
+   - Make sure to add it for all environments (Production, Preview, Development)
+
+2. **Deploy from GitHub**:
+   - Connect your GitHub repository to Vercel
+   - Vercel will automatically deploy on every push to main branch
+
+3. **Troubleshooting**:
+   - If build fails with "MongoDB URI not found", ensure the environment variable is properly set in Vercel
+   - The app uses dynamic rendering for database-dependent pages to avoid build-time errors
+
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

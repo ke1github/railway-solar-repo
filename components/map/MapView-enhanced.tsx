@@ -76,7 +76,7 @@ interface MapTooltip {
   } | null;
 }
 
-export function MapView({ sites, railwayStations, stats }: MapViewProps) {
+export default function MapView({ sites, railwayStations, stats }: MapViewProps) {
   const [selectedStation, setSelectedStation] = useState<RailwayStation | null>(null);
   const [selectedCluster, setSelectedCluster] = useState<string>('all');
   const [mapMode, setMapMode] = useState<'stations' | 'sites'>('stations');

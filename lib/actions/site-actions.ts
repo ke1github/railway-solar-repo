@@ -217,6 +217,15 @@ export async function getSiteById(siteId: string) {
 
 export async function getDashboardStats() {
   try {
+    // Check if MongoDB URI is available
+    if (!process.env.MONGODB_URI) {
+      return {
+        success: false,
+        error: 'Database connection not available',
+        stats: null
+      };
+    }
+    
     await connectToDatabase();
 
     // Project overview statistics
@@ -305,6 +314,76 @@ export async function getDashboardStats() {
         statuses: [],
         recentSites: []
       }
+    };
+  }
+}
+
+export async function getSitesWithStats() {
+  try {
+    // Check if MongoDB URI is available
+    if (!process.env.MONGODB_URI) {
+      return {
+        success: false,
+        error: 'Database connection not available',
+        sites: [],
+        stats: { clusterStats: [], statusStats: [] }
+      };
+    }
+    
+    await connectToDatabase();
+
+    // Get all sites
+    const sites = await RailwaySite.find({}).lean();
+
+    // Calculate cluster statistics
+    const clusterStats = await RailwaySite.aggregate([
+      {
+        $group: {
+          _id: '$cluster',
+          count: { $sum: 1 },
+          totalCapacity: { $sum: '$feasibleCapacity' },
+          avgCapacity: { $avg: '$feasibleCapacity' }
+        }
+      },
+      { $sort: { totalCapacity: -1 } }
+    ]);
+
+    // Calculate status statistics
+    const statusStats = await RailwaySite.aggregate([
+      {
+        $group: {
+          _id: '$status',
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $addFields: {
+          percentage: {
+            $multiply: [
+              { $divide: ['$count', sites.length] },
+              100
+            ]
+          }
+        }
+      },
+      { $sort: { count: -1 } }
+    ]);
+
+    return {
+      success: true,
+      sites: JSON.parse(JSON.stringify(sites)),
+      stats: {
+        clusterStats: JSON.parse(JSON.stringify(clusterStats)),
+        statusStats: JSON.parse(JSON.stringify(statusStats))
+      }
+    };
+  } catch (error) {
+    console.error('Error fetching sites with stats:', error);
+    return { 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Failed to fetch sites with stats',
+      sites: [],
+      stats: { clusterStats: [], statusStats: [] }
     };
   }
 }

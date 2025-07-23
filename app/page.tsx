@@ -7,6 +7,9 @@ import { Button } from '@/components/ui/button';
 import { getDashboardStats } from '@/lib/actions/site-actions';
 import { getEPCDashboardStats } from '@/lib/actions/epc-actions';
 
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic';
+
 // Types for dashboard data
 interface SiteData {
   _id: string;
@@ -54,6 +57,38 @@ export default async function HomePage() {
 
   const siteStats = siteStatsResult.stats;
   const epcStats = epcStatsResult.stats;
+
+  // Handle missing data gracefully
+  if (!siteStats || !epcStats) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-background-subtle to-background-accent">
+        <div className="container mx-auto px-6 py-8">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-foreground mb-2">
+              Railway Solar EPC Dashboard
+            </h1>
+            <p className="text-xl text-muted-foreground">
+              Professional Engineering, Procurement & Construction Management System
+            </p>
+          </div>
+          
+          <div className="flex justify-center items-center min-h-[400px]">
+            <Card className="p-8 text-center max-w-md">
+              <h3 className="text-xl font-semibold mb-4 text-yellow-600">Data Loading</h3>
+              <p className="text-muted-foreground mb-6">
+                Dashboard data is currently being loaded. Please refresh the page in a moment.
+              </p>
+              <Link href="/sites">
+                <Button>
+                  View Sites
+                </Button>
+              </Link>
+            </Card>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background-subtle to-background-accent">

@@ -5,6 +5,9 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { getSites } from '@/lib/actions/site-actions';
 
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic';
+
 interface Site {
   _id: string;
   id: string;
