@@ -1,0 +1,112 @@
+{
+  // ------------------------------------
+  // ✨ Formatting & Code Actions
+  // ------------------------------------
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "source.addMissingImports": "always"
+  },
+
+  // ------------------------------------
+  // ✨ Prettier settings
+  // ------------------------------------
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false,
+  "prettier.semi": true,
+  "prettier.singleQuote": false,
+  "prettier.jsxSingleQuote": false,
+  "prettier.trailingComma": "es5",
+  "prettier.arrowParens": "always",
+
+  // ------------------------------------
+  // ✨ TypeScript
+  // ------------------------------------
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.tsserver.maxTsServerMemory": 4096,
+  "typescript.enablePromptUseWorkspaceTsdk": false,
+
+  // ------------------------------------
+  // ✨ Copilot optimization
+  // ------------------------------------
+  "github.copilot.enable": {
+    "*": false,
+    "javascript": true,
+    "typescript": true,
+    "javascriptreact": true,
+    "typescriptreact": true
+  },
+  "github.copilot.inlineSuggest.enable": true,
+  "github.copilot.maxFileSize": 1000,
+  "github.copilot.chat.allowReadWorkspace": true,
+  "github.copilot.chat.codesearch.enabled": true,
+  "github.copilot.advanced": {},
+  "github.copilot.chat.reviewSelection.instructions": [],
+
+  // ------------------------------------
+  // ✨ Disable telemetry
+  // ------------------------------------
+  "telemetry.enableTelemetry": false,
+
+  // ------------------------------------
+  // ✨ Proxy & SSL
+  // ------------------------------------
+  "http.proxy": "",
+  "http.proxyStrictSSL": false,
+
+  // ------------------------------------
+  // ✨ Exclude large folders to improve performance
+  // ------------------------------------
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/dist/**": true,
+    "**/build/**": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/dist": true,
+    "**/build": true
+  },
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true
+  },
+
+  // ------------------------------------
+  // ✨ Language-specific formatting
+  // ------------------------------------
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // ------------------------------------
+  // ✨ Autosave
+  // ------------------------------------
+  "files.autoSave": "afterDelay",
+
+  // ------------------------------------
+  // ✨ ESLint
+  // ------------------------------------
+  "eslint.run": "onSave",
+  "eslint.validate": ["javascript", "typescript"],
+  "material-icon-theme.rootFolders.color": "#26a69a",
+  "workbench.iconTheme": "material-icon-theme",
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "window.newWindowProfile": "Default"
+}
