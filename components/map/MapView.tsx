@@ -81,7 +81,7 @@ export function MapView({ sites, railwayStations, stats }: MapViewProps) {
     null
   );
   const [selectedCluster, setSelectedCluster] = useState<string>("all");
-  const [mapMode, setMapMode] = useState<"stations" | "sites">("stations");
+  const [mapMode] = useState<"stations" | "sites">("stations");
   const [tooltip, setTooltip] = useState<MapTooltip>({
     visible: false,
     x: 0,

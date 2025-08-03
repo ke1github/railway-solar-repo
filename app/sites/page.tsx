@@ -1,12 +1,13 @@
-import React from 'react';
-import Link from 'next/link';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { getSites } from '@/lib/actions/site-actions';
+import React from "react";
+import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { getSites } from "@/lib/actions/site-actions";
+import { getZones } from "@/lib/actions/hierarchy-actions";
 
 // Force dynamic rendering for this page
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 interface Site {
   _id: string;
@@ -23,20 +24,32 @@ interface Site {
   feasibleArea: number;
   feasibleCapacity: number;
   energyGenerated?: number;
-  status: 'planning' | 'survey' | 'design' | 'construction' | 'operational' | 'maintenance';
+  status:
+    | "planning"
+    | "survey"
+    | "design"
+    | "construction"
+    | "operational"
+    | "maintenance";
 }
 
 export default async function SitesPage() {
-  const result = await getSites();
-  
-  if (!result.success) {
+  // Get both sites and zones for hierarchical navigation
+  const [sitesResult, zonesResult] = await Promise.all([
+    getSites(),
+    getZones(),
+  ]);
+
+  if (!sitesResult.success) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-background-subtle to-background-accent">
         <div className="container mx-auto px-6 py-8">
           <div className="flex justify-center items-center min-h-[400px]">
             <Card className="p-8 text-center max-w-md">
-              <h3 className="text-xl font-semibold mb-4 text-red-600">Error Loading Sites</h3>
-              <p className="text-muted-foreground mb-6">{result.error}</p>
+              <h3 className="text-xl font-semibold mb-4 text-red-600">
+                Error Loading Sites
+              </h3>
+              <p className="text-muted-foreground mb-6">{sitesResult.error}</p>
               <Link href="/sites/new">
                 <Button>Add First Site</Button>
               </Link>
@@ -47,7 +60,8 @@ export default async function SitesPage() {
     );
   }
 
-  const sites: Site[] = result.sites;
+  const sites: Site[] = sitesResult.sites;
+  const zones = zonesResult.success ? zonesResult.zones : [];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background-subtle to-background-accent">
@@ -76,31 +90,42 @@ export default async function SitesPage() {
               <div className="text-2xl font-bold text-blue-600">
                 {sites.length}
               </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Total Sites</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Total Sites
+              </p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-6">
               <div className="text-2xl font-bold text-green-600">
-                {sites.filter(site => site.status === 'operational').length}
+                {sites.filter((site) => site.status === "operational").length}
               </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Operational</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Operational
+              </p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-6">
               <div className="text-2xl font-bold text-orange-600">
-                {sites.filter(site => site.status === 'construction').length}
+                {sites.filter((site) => site.status === "construction").length}
               </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">In Progress</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                In Progress
+              </p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-6">
               <div className="text-2xl font-bold text-purple-600">
-                {sites.reduce((sum, site) => sum + (site.feasibleCapacity || 0), 0).toFixed(1)} kW
+                {sites
+                  .reduce((sum, site) => sum + (site.feasibleCapacity || 0), 0)
+                  .toFixed(1)}{" "}
+                kW
               </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Total Capacity</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Total Capacity
+              </p>
             </CardContent>
           </Card>
         </div>
@@ -122,34 +147,58 @@ export default async function SitesPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {sites.map((site) => (
-              <Card key={site._id} className="hover:shadow-lg transition-shadow">
+              <Card
+                key={site._id}
+                className="hover:shadow-lg transition-shadow"
+              >
                 <CardHeader className="pb-3">
                   <div className="flex justify-between items-start">
-                    <CardTitle className="text-lg">{site.locationName}</CardTitle>
-                    <Badge variant={
-                      site.status === 'operational' ? 'default' :
-                      site.status === 'construction' ? 'secondary' :
-                      site.status === 'planning' ? 'outline' :
-                      'destructive'
-                    }>
+                    <CardTitle className="text-lg">
+                      {site.locationName}
+                    </CardTitle>
+                    <Badge
+                      variant={
+                        site.status === "operational"
+                          ? "default"
+                          : site.status === "construction"
+                          ? "secondary"
+                          : site.status === "planning"
+                          ? "outline"
+                          : "destructive"
+                      }
+                    >
                       {site.status}
                     </Badge>
                   </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">{site.cluster}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    {site.cluster}
+                  </p>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Capacity:</span>
-                      <span className="font-semibold">{site.feasibleCapacity} kW</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        Capacity:
+                      </span>
+                      <span className="font-semibold">
+                        {site.feasibleCapacity} kW
+                      </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Area:</span>
-                      <span className="font-semibold">{site.feasibleArea} m²</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        Area:
+                      </span>
+                      <span className="font-semibold">
+                        {site.feasibleArea} m²
+                      </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Energy:</span>
-                      <span className="font-semibold">{(site.energyGenerated || 0).toLocaleString()} kWh</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        Energy:
+                      </span>
+                      <span className="font-semibold">
+                        {(site.energyGenerated || 0).toLocaleString()} kWh
+                      </span>
                     </div>
                     <div className="pt-3 border-t">
                       <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
@@ -164,7 +213,10 @@ export default async function SitesPage() {
                       </Button>
                     </Link>
                     <Link href={`/sites/${site.id}/edit`} className="flex-1">
-                      <Button className="w-full bg-blue-600 hover:bg-blue-700" size="sm">
+                      <Button
+                        className="w-full bg-blue-600 hover:bg-blue-700"
+                        size="sm"
+                      >
                         Edit
                       </Button>
                     </Link>
