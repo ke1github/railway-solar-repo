@@ -1,9 +1,12 @@
 "use server";
 
-import { connectToDatabase } from "@/lib/mongodb";
-import RailwaySite from "@/models/RailwaySite";
-import RailwaySiteExtended from "@/models/RailwaySiteExtended";
-import { Station } from "@/models/RailwayHierarchy";
+import { connectToDatabase } from "../../lib/mongodb";
+import {
+  IRailwaySiteExtended,
+  RailwaySite,
+  RailwaySiteExtended,
+  Station,
+} from "../../models";
 import { revalidatePath } from "next/cache";
 
 export interface AIProjectInsight {
@@ -1750,7 +1753,7 @@ export async function analyzeResourceAllocation(
     }).lean();
 
     // Create a map for quick access to extended data
-    const extendedSitesMap = new Map<string, any>();
+    const extendedSitesMap = new Map<string, IRailwaySiteExtended>();
     extendedSites.forEach((site) => {
       extendedSitesMap.set(site.siteId.toString(), site);
     });

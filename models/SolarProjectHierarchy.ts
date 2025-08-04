@@ -1,6 +1,13 @@
 // models/SolarProjectHierarchy.ts
 import mongoose, { Schema } from "mongoose";
 
+/**
+ * @deprecated This monolithic model is being phased out in favor of separate models for
+ * projects, phases, tasks, etc. Use the specialized models for new code.
+ * This model is maintained for backward compatibility only.
+ * See docs/MODEL_CONSOLIDATION_PLAN.md for migration details.
+ */
+
 // Define the comprehensive project hierarchy schema
 
 // Project Task Schema

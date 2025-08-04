@@ -1,57 +1,34 @@
 "use server";
 
 import { connectToDatabase } from "@/lib/mongodb";
-import { Zone, Division, Station } from "@/models/SolarProjectHierarchy";
+import { Zone, Division, Station } from "@/models";
 import { revalidatePath } from "next/cache";
-
-// Types for form data
-export interface ZoneFormData {
-  name: string;
-  code: string;
-  region: string;
-  headquarters: string;
-  contactPerson: string;
-  contactEmail: string;
-  contactPhone: string;
-}
-
-export interface DivisionFormData {
-  name: string;
-  code: string;
-  zoneId: string;
-  headquarters: string;
-  contactPerson: string;
-  contactEmail: string;
-  contactPhone: string;
-}
-
-export interface StationFormData {
-  name: string;
-  code: string;
-  divisionId: string;
-  stationType: string;
-  address: string;
-  latitude: number;
-  longitude: number;
-  contactPerson: string;
-  contactEmail: string;
-  contactPhone: string;
-}
+import {
+  zoneSchema,
+  createZoneSchema,
+  DivisionFormData,
+  StationFormData,
+} from "@/lib/validation";
 
 // Zone CRUD operations
 export async function createZone(formData: FormData) {
   try {
     await connectToDatabase();
 
-    const zoneData: ZoneFormData = {
+    // Extract form data
+    const rawZoneData = {
       name: formData.get("name") as string,
       code: formData.get("code") as string,
       region: formData.get("region") as string,
-      headquarters: formData.get("headquarters") as string,
+      headOffice: formData.get("headquarters") as string, // Map to correct field name
       contactPerson: formData.get("contactPerson") as string,
       contactEmail: formData.get("contactEmail") as string,
       contactPhone: formData.get("contactPhone") as string,
+      status: "active",
     };
+
+    // Validate with Zod
+    const zoneData = createZoneSchema.parse(rawZoneData);
 
     const newZone = new Zone(zoneData);
     await newZone.save();
@@ -72,15 +49,19 @@ export async function updateZone(zoneId: string, formData: FormData) {
   try {
     await connectToDatabase();
 
-    const updateData: Partial<ZoneFormData> = {
+    // Extract form data
+    const rawUpdateData = {
       name: formData.get("name") as string,
       code: formData.get("code") as string,
       region: formData.get("region") as string,
-      headquarters: formData.get("headquarters") as string,
+      headOffice: formData.get("headquarters") as string, // Map to correct field name
       contactPerson: formData.get("contactPerson") as string,
       contactEmail: formData.get("contactEmail") as string,
       contactPhone: formData.get("contactPhone") as string,
     };
+
+    // Validate with Zod partial schema (allowing partial updates)
+    const updateData = zoneSchema.partial().parse(rawUpdateData);
 
     const updatedZone = await Zone.findByIdAndUpdate(
       zoneId,
@@ -713,7 +694,7 @@ export async function naturalLanguageSearch(query: string) {
     const capacityLt = extractNumber(queryLower, /capacity\s*<\s*(\d+)/);
 
     // Build MongoDB query based on filters
-    const query: Record<string, any> = {};
+    const query: Record<string, unknown> = {};
 
     if (zoneMatch?.[1]) {
       query["zoneName"] = { $regex: zoneMatch[1], $options: "i" };

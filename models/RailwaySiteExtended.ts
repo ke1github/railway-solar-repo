@@ -1,7 +1,11 @@
 // models/RailwaySiteExtended.ts
 import mongoose, { Schema } from "mongoose";
 
-// Extending the RailwaySite model to include additional fields for AI functionality
+/**
+ * @deprecated This extended model is being phased out in favor of the Site model with proper metadata fields.
+ * This model is maintained for backward compatibility only.
+ * See docs/MODEL_CONSOLIDATION_PLAN.md for migration details.
+ */
 
 // Types for tracking documents and photos
 interface ISiteDocument {

@@ -1,9 +1,10 @@
 "use server";
 
-import { connectToDatabase } from "@/lib/mongodb";
+import { connectToDatabase } from "../../lib/mongodb";
 import { revalidatePath } from "next/cache";
-import SolarProject, { ISolarProject } from "@/models/SolarProjectHierarchy";
-import RailwaySite from "@/models/RailwaySite";
+import { RailwaySite } from "../../models";
+import { ISolarProject } from "../../models";
+import SolarProject from "../../models/SolarProjectHierarchy";
 
 // Create a new solar project
 export async function createSolarProject(projectData: {
@@ -167,7 +168,7 @@ export async function getSolarProjects(filters?: {
   try {
     await connectToDatabase();
 
-    const query: any = {};
+    const query: Record<string, unknown> = {};
 
     // Apply filters if provided
     if (filters) {
@@ -327,9 +328,10 @@ export async function generateProjectInsights(projectId: string) {
 
     let predictedCompletionDate;
     if (plannedStartDate && plannedEndDate && currentProgress > 0) {
-      const totalDays =
-        (plannedEndDate.getTime() - plannedStartDate.getTime()) /
-        (1000 * 60 * 60 * 24);
+      // Calculate total days but not used currently
+      // const totalDays =
+      //   (plannedEndDate.getTime() - plannedStartDate.getTime()) /
+      //   (1000 * 60 * 60 * 24);
       const daysElapsed =
         (new Date().getTime() - plannedStartDate.getTime()) /
         (1000 * 60 * 60 * 24);
@@ -434,11 +436,11 @@ export async function generateProjectInsights(projectId: string) {
         ? project.budget.approved * 1.05
         : undefined,
       riskAssessment: {
-        overall: overallRisk,
-        schedule: scheduleRisk,
-        budget: budgetRisk,
-        quality: qualityRisk,
-      } as any,
+        overall: overallRisk as "low" | "medium" | "high",
+        schedule: scheduleRisk as "low" | "medium" | "high",
+        budget: budgetRisk as "low" | "medium" | "high",
+        quality: qualityRisk as "low" | "medium" | "high",
+      },
       keyPerformanceIndicators: {
         schedulePerformanceIndex:
           scheduleRisk === "high"

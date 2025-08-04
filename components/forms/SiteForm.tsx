@@ -1,63 +1,86 @@
 // components/forms/SiteForm.tsx
-'use client';
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+"use client";
 
-interface SiteData {
-  locationName?: string;
-  id?: string;
-  address?: string;
-  state?: string;
-  cluster?: string;
-  latitude?: number;
-  longitude?: number;
-  feasibleCapacity?: number;
-  feasibleArea?: number;
-  energyGenerated?: number;
-  status?: string;
-  priority?: string;
-  panelType?: string;
-  installationType?: string;
-  notes?: string;
-}
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { siteSchema, type SiteFormData } from "@/lib/validation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  createSite,
+  updateSite,
+  getStations,
+} from "@/lib/actions/hierarchy-actions";
 
 interface SiteFormProps {
-  onSubmit: (data: FormData) => Promise<void>;
-  initialData?: SiteData;
+  initialData?: Partial<SiteFormData>;
+  siteId?: string;
   isEditing?: boolean;
 }
 
-export default function SiteForm({ onSubmit, initialData, isEditing = false }: SiteFormProps) {
+export default function SiteForm({
+  initialData,
+  siteId,
+  isEditing = false,
+}: SiteFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const [stations, setStations] = useState<
+    Array<{
+      _id: string;
+      code: string;
+      name: string;
+      divisionId: string;
+      divisionCode: string;
+      zoneId: string;
+      zoneCode: string;
+    }>
+  >([]);
+  const [isLoadingStations, setIsLoadingStations] = useState(false);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsSubmitting(true);
-    setErrors({});
-
-    try {
-      const formData = new FormData(event.currentTarget);
-      await onSubmit(formData);
-    } catch (error) {
-      console.error('Form submission error:', error);
-      setErrors({ submit: 'Failed to submit form. Please try again.' });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    setValue,
+    watch,
+  } = useForm<SiteFormData>({
+    resolver: zodResolver(siteSchema),
+    defaultValues: initialData || {
+      siteType: "rooftop",
+      status: "identified",
+      projectPhase: "planning",
+      sanctionedLoadUnit: "kW",
+      waterSource: false,
+      environmentalClearance: true,
+    },
+  });
 
   return (
     <div className="max-w-4xl mx-auto">
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl font-bold">
-            {isEditing ? 'Edit Railway Site' : 'Add New Railway Site'}
+            {isEditing ? "Edit Railway Site" : "Add New Railway Site"}
           </CardTitle>
           <p className="text-gray-600 dark:text-gray-400">
-            {isEditing ? 'Update the site information below' : 'Enter details for the new railway solar installation site'}
+            {isEditing
+              ? "Update the site information below"
+              : "Enter details for the new railway solar installation site"}
           </p>
         </CardHeader>
         <CardContent>
@@ -70,13 +93,15 @@ export default function SiteForm({ onSubmit, initialData, isEditing = false }: S
                 </label>
                 <Input
                   name="locationName"
-                  defaultValue={initialData?.locationName || ''}
+                  defaultValue={initialData?.locationName || ""}
                   placeholder="e.g., Delhi Junction Railway Station"
                   required
                   className="w-full"
                 />
                 {errors.locationName && (
-                  <p className="text-red-500 text-sm mt-1">{errors.locationName}</p>
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.locationName}
+                  </p>
                 )}
               </div>
 
@@ -86,7 +111,7 @@ export default function SiteForm({ onSubmit, initialData, isEditing = false }: S
                 </label>
                 <Input
                   name="id"
-                  defaultValue={initialData?.id || ''}
+                  defaultValue={initialData?.id || ""}
                   placeholder="e.g., RAIL_001"
                   required
                   className="w-full"
@@ -104,7 +129,7 @@ export default function SiteForm({ onSubmit, initialData, isEditing = false }: S
               </label>
               <Input
                 name="address"
-                defaultValue={initialData?.address || ''}
+                defaultValue={initialData?.address || ""}
                 placeholder="Complete address of the railway installation"
                 required
                 className="w-full"
@@ -122,7 +147,7 @@ export default function SiteForm({ onSubmit, initialData, isEditing = false }: S
                 </label>
                 <Input
                   name="state"
-                  defaultValue={initialData?.state || ''}
+                  defaultValue={initialData?.state || ""}
                   placeholder="e.g., Delhi"
                   required
                   className="w-full"
@@ -135,7 +160,7 @@ export default function SiteForm({ onSubmit, initialData, isEditing = false }: S
                 </label>
                 <Input
                   name="cluster"
-                  defaultValue={initialData?.cluster || ''}
+                  defaultValue={initialData?.cluster || ""}
                   placeholder="e.g., Northern Railway"
                   required
                   className="w-full"
@@ -152,7 +177,7 @@ export default function SiteForm({ onSubmit, initialData, isEditing = false }: S
                   name="latitude"
                   type="number"
                   step="any"
-                  defaultValue={initialData?.latitude || ''}
+                  defaultValue={initialData?.latitude || ""}
                   placeholder="e.g., 28.6139"
                   className="w-full"
                 />
@@ -166,7 +191,7 @@ export default function SiteForm({ onSubmit, initialData, isEditing = false }: S
                   name="longitude"
                   type="number"
                   step="any"
-                  defaultValue={initialData?.longitude || ''}
+                  defaultValue={initialData?.longitude || ""}
                   placeholder="e.g., 77.2090"
                   className="w-full"
                 />
@@ -183,7 +208,7 @@ export default function SiteForm({ onSubmit, initialData, isEditing = false }: S
                   name="feasibleCapacity"
                   type="number"
                   step="0.01"
-                  defaultValue={initialData?.feasibleCapacity || ''}
+                  defaultValue={initialData?.feasibleCapacity || ""}
                   placeholder="e.g., 150.00"
                   required
                   className="w-full"
@@ -198,7 +223,7 @@ export default function SiteForm({ onSubmit, initialData, isEditing = false }: S
                   name="feasibleArea"
                   type="number"
                   step="0.01"
-                  defaultValue={initialData?.feasibleArea || ''}
+                  defaultValue={initialData?.feasibleArea || ""}
                   placeholder="e.g., 1000.00"
                   required
                   className="w-full"
@@ -213,7 +238,7 @@ export default function SiteForm({ onSubmit, initialData, isEditing = false }: S
                   name="energyGenerated"
                   type="number"
                   step="0.01"
-                  defaultValue={initialData?.energyGenerated || '0'}
+                  defaultValue={initialData?.energyGenerated || "0"}
                   placeholder="e.g., 180000.00"
                   className="w-full"
                 />
@@ -226,9 +251,9 @@ export default function SiteForm({ onSubmit, initialData, isEditing = false }: S
                 <label className="block text-sm font-medium mb-2">
                   Status <span className="text-red-500">*</span>
                 </label>
-                <select 
-                  name="status" 
-                  defaultValue={initialData?.status || 'planned'}
+                <select
+                  name="status"
+                  defaultValue={initialData?.status || "planned"}
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800"
                 >
@@ -244,9 +269,9 @@ export default function SiteForm({ onSubmit, initialData, isEditing = false }: S
                 <label className="block text-sm font-medium mb-2">
                   Priority Level
                 </label>
-                <select 
-                  name="priority" 
-                  defaultValue={initialData?.priority || 'medium'}
+                <select
+                  name="priority"
+                  defaultValue={initialData?.priority || "medium"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800"
                 >
                   <option value="low">Low</option>
@@ -263,9 +288,9 @@ export default function SiteForm({ onSubmit, initialData, isEditing = false }: S
                 <label className="block text-sm font-medium mb-2">
                   Panel Type
                 </label>
-                <select 
-                  name="panelType" 
-                  defaultValue={initialData?.panelType || 'monocrystalline'}
+                <select
+                  name="panelType"
+                  defaultValue={initialData?.panelType || "monocrystalline"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800"
                 >
                   <option value="monocrystalline">Monocrystalline</option>
@@ -279,9 +304,9 @@ export default function SiteForm({ onSubmit, initialData, isEditing = false }: S
                 <label className="block text-sm font-medium mb-2">
                   Installation Type
                 </label>
-                <select 
-                  name="installationType" 
-                  defaultValue={initialData?.installationType || 'rooftop'}
+                <select
+                  name="installationType"
+                  defaultValue={initialData?.installationType || "rooftop"}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800"
                 >
                   <option value="rooftop">Rooftop</option>
@@ -294,12 +319,10 @@ export default function SiteForm({ onSubmit, initialData, isEditing = false }: S
 
             {/* Notes */}
             <div>
-              <label className="block text-sm font-medium mb-2">
-                Notes
-              </label>
+              <label className="block text-sm font-medium mb-2">Notes</label>
               <textarea
                 name="notes"
-                defaultValue={initialData?.notes || ''}
+                defaultValue={initialData?.notes || ""}
                 placeholder="Additional notes or special considerations..."
                 rows={3}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800"
@@ -309,32 +332,34 @@ export default function SiteForm({ onSubmit, initialData, isEditing = false }: S
             {/* Error Display */}
             {errors.submit && (
               <div className="p-4 bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800 rounded-md">
-                <p className="text-red-600 dark:text-red-400">{errors.submit}</p>
+                <p className="text-red-600 dark:text-red-400">
+                  {errors.submit}
+                </p>
               </div>
             )}
 
             {/* Submit Buttons */}
             <div className="flex justify-end space-x-4 pt-6 border-t">
-              <Button 
-                type="button" 
+              <Button
+                type="button"
                 variant="outline"
                 onClick={() => window.history.back()}
                 disabled={isSubmitting}
               >
                 Cancel
               </Button>
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 disabled={isSubmitting}
                 className="bg-blue-600 hover:bg-blue-700"
               >
                 {isSubmitting ? (
                   <div className="flex items-center space-x-2">
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    <span>{isEditing ? 'Updating...' : 'Creating...'}</span>
+                    <span>{isEditing ? "Updating..." : "Creating..."}</span>
                   </div>
                 ) : (
-                  <span>{isEditing ? 'Update Site' : 'Create Site'}</span>
+                  <span>{isEditing ? "Update Site" : "Create Site"}</span>
                 )}
               </Button>
             </div>

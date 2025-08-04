@@ -71,22 +71,34 @@ export default async function AIHierarchyPage() {
                     </Link>
                   </div>
                 ) : (
-                  zones.map((zone: any) => (
-                    <Link href={`/admin/zones/${zone._id}`} key={zone._id}>
-                      <Card className="w-64 hover:bg-muted/50 transition-colors cursor-pointer">
-                        <CardContent className="p-6">
-                          <h3 className="text-lg font-semibold">{zone.name}</h3>
-                          <div className="text-sm text-muted-foreground mb-2">
-                            Zone Code: {zone.code}
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span>Divisions: {zone.totalDivisions}</span>
-                            <span>Stations: {zone.totalStations}</span>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  ))
+                  zones.map(
+                    (zone: {
+                      _id: string;
+                      name: string;
+                      code: string;
+                      region: string;
+                      divisionsCount?: number;
+                      stationsCount?: number;
+                      sitesCount?: number;
+                    }) => (
+                      <Link href={`/admin/zones/${zone._id}`} key={zone._id}>
+                        <Card className="w-64 hover:bg-muted/50 transition-colors cursor-pointer">
+                          <CardContent className="p-6">
+                            <h3 className="text-lg font-semibold">
+                              {zone.name}
+                            </h3>
+                            <div className="text-sm text-muted-foreground mb-2">
+                              Zone Code: {zone.code}
+                            </div>
+                            <div className="flex justify-between text-sm">
+                              <span>Divisions: {zone.totalDivisions}</span>
+                              <span>Stations: {zone.totalStations}</span>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    )
+                  )
                 )}
               </div>
             </CardContent>

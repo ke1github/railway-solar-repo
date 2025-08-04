@@ -5,11 +5,14 @@ A comprehensive Next.js application for managing solar installations across rail
 ## Features
 
 - 📊 **Real-time Dashboard** - Live statistics and performance metrics
-- 🏗️ **Site Management** - Comprehensive site details and specifications  
+- 🏗️ **Site Management** - Comprehensive site details and specifications
 - 🗺️ **Interactive Maps** - Geographic visualization of installations
 - 📈 **Performance Analytics** - Energy generation and efficiency tracking
 - 🔧 **Maintenance Scheduling** - Automated maintenance planning
 - 📱 **Responsive Design** - Mobile-friendly interface
+- 🧮 **Solar Analytics** - ROI calculation and performance metrics
+- 📄 **Report Generation** - Customizable CSV exports and formatted reports
+- 🔔 **Notification System** - Alerts for maintenance and performance issues
 
 ## Tech Stack
 
@@ -22,7 +25,8 @@ A comprehensive Next.js application for managing solar installations across rail
 ## Getting Started
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - MongoDB Atlas account
 - Environment variables configured
 
@@ -30,21 +34,25 @@ A comprehensive Next.js application for managing solar installations across rail
 
 1. Clone the repository
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Set up environment variables in `.env.local`:
+
 ```bash
 MONGODB_URI=your_mongodb_connection_string
 ```
 
 4. Seed the database:
+
 ```bash
 npm run db:seed
 ```
 
 5. Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -54,7 +62,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the application.
 ## Available Scripts
 
 - `npm run dev` - Start development server
-- `npm run build` - Build for production  
+- `npm run build` - Build for production
 - `npm run start` - Start production server
 - `npm run db:seed` - Seed database with railway sites data
 - `npm run db:status` - Check database connection and status
@@ -63,12 +71,20 @@ Open [http://localhost:3000](http://localhost:3000) to view the application.
 
 ```
 ├── app/                    # Next.js App Router pages
-│   ├── api/               # API routes  
+│   ├── api/               # API routes
 │   ├── sites/             # Site management pages
 │   └── page.tsx           # Dashboard homepage
 ├── components/            # Reusable UI components
 ├── data/                  # CSV data files
 ├── lib/                   # Utility libraries
+│   ├── utils/             # Helper utilities
+│   │   ├── solar-analytics.ts    # ROI, efficiency calculations
+│   │   ├── report-generator.ts   # Export and formatting
+│   │   ├── notification-service.ts # Alert system
+│   │   ├── data-validation.ts    # Input sanitization
+│   │   ├── date-utils.ts         # Date formatting
+│   │   ├── solar-calculator.ts   # Solar calculations
+│   │   └── api-response.ts       # API response formatting
 ├── models/                # Database schemas
 ├── scripts/               # Database scripts
 └── public/                # Static assets
@@ -83,8 +99,9 @@ Open [http://localhost:3000](http://localhost:3000) to view the application.
 ## Database
 
 The system uses MongoDB with 174 railway solar sites across 7 clusters:
+
 - **KGP**: 75 sites, 1,146 kW
-- **BLS**: 28 sites, 386 kW  
+- **BLS**: 28 sites, 386 kW
 - **GII**: 24 sites, 383 kW
 - **KGP 2**: 13 sites, 175 kW
 - **MCA**: 17 sites, 151 kW
@@ -100,11 +117,13 @@ This is a production system for railway solar management. All changes should be 
 To deploy this application on Vercel:
 
 1. **Set up environment variables in Vercel**:
+
    - Go to your Vercel project settings
    - Add `MONGODB_URI` environment variable with your MongoDB Atlas connection string
    - Make sure to add it for all environments (Production, Preview, Development)
 
 2. **Deploy from GitHub**:
+
    - Connect your GitHub repository to Vercel
    - Vercel will automatically deploy on every push to main branch
 
@@ -115,5 +134,7 @@ To deploy this application on Vercel:
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
 # railway-solar-repo
+
 # railway-solar-repo
