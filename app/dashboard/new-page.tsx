@@ -59,9 +59,8 @@ export default function DashboardPage() {
 
     // Fetch data on mount
     fetchEnergyData(undefined, startDate, endDate);
-
-    // We don't need to call refreshAllData here since it's already called in the DataContext
-  }, []); // Empty dependency array since we only want this to run once on mount
+    refreshAllData();
+  }, [fetchEnergyData, refreshAllData]);
 
   // Handle loading state
   if (isLoadingDashboardStats && !dashboardStats) {

@@ -1,15 +1,23 @@
 // app/layout.tsx
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Inter, Figtree } from "next/font/google";
+import { Metadata } from "next";
 import { ThemeProvider } from "@/components/shared/ThemeProvider";
 import { cn } from "@/lib/utils";
 import { DashboardLayout } from "@/components/layout";
+import { DataProvider } from "@/lib/context/DataContext";
 
-const inter = Inter({ subsets: ["latin"] });
+// Load Figtree font - clean, professional and modern
+const figtree = Figtree({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-figtree",
+});
 
-export const metadata = {
-  title: "Railway Solar App",
-  description: "2.5 MW KGP Railway Solar Project Monitoring Platform",
+export const metadata: Metadata = {
+  title: "Railway Solar Management",
+  description:
+    "Professional management platform for 2.5 MW KGP Railway Solar Project",
 };
 
 export default function RootLayout({
@@ -18,15 +26,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={figtree.variable}>
       <body
-        className={cn(
-          inter.className,
-          "min-h-screen bg-background text-foreground"
-        )}
+        className={cn("min-h-screen bg-background text-foreground font-sans")}
       >
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          <DashboardLayout>{children}</DashboardLayout>
+          <DataProvider>
+            <DashboardLayout>{children}</DashboardLayout>
+          </DataProvider>
         </ThemeProvider>
       </body>
     </html>

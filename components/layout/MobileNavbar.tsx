@@ -23,8 +23,8 @@ export function MobileNavbar() {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 bg-background border-t border-border lg:hidden">
-      <div className="flex justify-around items-center py-2">
+    <div className="fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-md border-t border-border/50 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] lg:hidden">
+      <div className="flex justify-around items-center py-3">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive =
@@ -36,12 +36,23 @@ export function MobileNavbar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex flex-col items-center justify-center p-2 w-16",
-                isActive ? "text-accent" : "text-muted-foreground"
+                "flex flex-col items-center justify-center p-2 w-16 transition-all duration-200",
+                isActive
+                  ? "text-primary font-medium -translate-y-1"
+                  : "text-muted-foreground hover:text-foreground"
               )}
             >
-              <Icon className="h-5 w-5" />
-              <span className="text-xs mt-1">{item.label}</span>
+              <div
+                className={cn(
+                  "flex items-center justify-center h-10 w-10 rounded-full mb-1",
+                  isActive ? "bg-primary/10 shadow-sm" : "bg-transparent"
+                )}
+              >
+                <Icon
+                  className={cn("h-5 w-5", isActive ? "animate-pulse" : "")}
+                />
+              </div>
+              <span className="text-xs">{item.label}</span>
             </Link>
           );
         })}

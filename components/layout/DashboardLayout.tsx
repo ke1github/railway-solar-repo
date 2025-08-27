@@ -24,11 +24,16 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Main Content */}
       <main
         className={cn(
-          "pt-6 pb-20 lg:pb-6", // Add bottom padding for mobile navbar
-          "lg:ml-64 lg:mr-64" // Adjust for both sidebars on desktop
+          "pt-8 pb-20 lg:pb-8", // Add bottom padding for mobile navbar
+          "lg:ml-64 lg:mr-64", // Adjust for both sidebars on desktop
+          "transition-all duration-300 ease-in-out" // Smooth transitions
         )}
       >
-        <div className="container mx-auto px-4 max-w-5xl">{children}</div>
+        <div className="container mx-auto px-4 max-w-5xl">
+          <div className="relative z-10 backdrop-blur-sm bg-background/40 rounded-xl p-6 shadow-sm border border-border/50">
+            {children}
+          </div>
+        </div>
       </main>
     </div>
   );

@@ -12,6 +12,7 @@ import {
   FileText,
   Menu,
   X,
+  Sun,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -49,17 +50,28 @@ export function Sidebar({ className }: SidebarProps) {
       {/* Sidebar for desktop */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 w-64 bg-background border-r border-border transition-transform lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-40 w-64 bg-background/95 backdrop-blur-sm border-r border-border/50 shadow-sm transition-transform lg:translate-x-0",
           mobileOpen ? "translate-x-0" : "-translate-x-full",
           className
         )}
       >
-        <div className="flex flex-col h-full p-4">
-          <div className="py-6 px-4 border-b border-border mb-6">
-            <h2 className="text-xl font-semibold">Railway Solar</h2>
+        <div className="flex flex-col h-full">
+          {/* Logo and Brand Header */}
+          <div className="py-6 px-5 border-b border-border/50 mb-6 bg-gradient-to-r from-primary/10 to-transparent">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 rounded-md bg-gradient-to-br from-solar-blue to-solar-teal flex items-center justify-center text-white">
+                <Sun size={18} className="animate-pulse" />
+              </div>
+              <h2 className="text-xl font-semibold tracking-tight">
+                Railway Solar
+              </h2>
+            </div>
+            <p className="text-xs text-muted-foreground mt-1 pl-11">
+              Project Management
+            </p>
           </div>
 
-          <nav className="flex-1 space-y-1">
+          <nav className="flex-1 px-3 space-y-1 overflow-y-auto">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive =
@@ -71,25 +83,36 @@ export function Sidebar({ className }: SidebarProps) {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "flex items-center px-4 py-3 text-sm rounded-md transition-colors",
+                    "flex items-center px-4 py-3 text-sm rounded-md transition-all duration-200",
                     isActive
-                      ? "bg-accent text-accent-foreground font-medium"
-                      : "text-foreground hover:bg-muted"
+                      ? "bg-primary text-primary-foreground font-medium shadow-sm"
+                      : "text-foreground hover:bg-background-accent hover:translate-x-1"
                   )}
                 >
-                  <Icon className="mr-3 h-5 w-5" />
+                  <Icon
+                    className={cn(
+                      "mr-3 h-5 w-5",
+                      isActive ? "animate-pulse" : ""
+                    )}
+                  />
                   {item.label}
                 </Link>
               );
             })}
           </nav>
 
-          <div className="mt-auto pt-4 border-t border-border">
+          <div className="mt-auto pt-4 pb-4 px-3 border-t border-border/50 bg-background-subtle/50">
+            <div className="px-4 py-2 mb-3 rounded-md bg-background-accent/50 border border-border/50 text-xs text-muted-foreground">
+              <p className="font-medium text-foreground mb-1">
+                Railway Solar v1.2.0
+              </p>
+              <p>Last synced: Today at 14:30</p>
+            </div>
             <Link
               href="/settings"
-              className="flex items-center px-4 py-3 text-sm rounded-md text-foreground hover:bg-muted"
+              className="flex items-center px-4 py-3 text-sm rounded-md text-foreground hover:bg-background-accent group transition-all duration-200"
             >
-              <Settings className="mr-3 h-5 w-5" />
+              <Settings className="mr-3 h-5 w-5 group-hover:rotate-90 transition-transform duration-300" />
               Settings
             </Link>
           </div>

@@ -1,729 +1,141 @@
 @import "tailwindcss";
 
-/* Outstanding Minimal Design System */
-/* Focus: Typography, Spacing, and Clean Aesthetics */
+/* ======================================
+ * Railway Solar Design System
+ * Consolidated global styles
+ * ====================================== */
 
+/* ---- Core CSS Variables ---- */
 :root {
-  /* Ultra-Modern Color System with Advanced Variables */
-  --background: 255 255 255;
-  --background-subtle: 250 250 250;
-  --background-accent: 248 250 252;
+  /* Core Color System */
+  --background: 252 253 255;
+  --background-subtle: 248 250 252;
+  --background-accent: 241 245 249;
   --background-glass: 255 255 255;
   --foreground: 15 23 42;
   --muted: 241 245 249;
   --muted-foreground: 100 116 139;
   --border: 226 232 240;
-  --accent: 37 99 235;
+  --accent: 25 113 194;
   --accent-foreground: 255 255 255;
-  --accent-glow: 37 99 235;
-  
-  /* Advanced Gradients */
-  --gradient-primary: linear-gradient(135deg, rgb(59 130 246), rgb(147 51 234));
-  --gradient-secondary: linear-gradient(135deg, rgb(16 185 129), rgb(34 197 94));
-  --gradient-accent: linear-gradient(135deg, rgb(245 158 11), rgb(251 146 60));
-  --gradient-neural: linear-gradient(135deg, rgb(139 92 246), rgb(196 181 253));
-  
-  /* Perfect Spacing Scale */
+
+  /* Railway Solar Logo Colors */
+  --logo-orange: 255 112 67; /* #ff7043 */
+  --logo-amber: 255 167 38; /* #ffa726 */
+  --logo-yellow: 253 216 53; /* #fdd835 */
+
+  /* Essential Gradients */
+  --gradient-primary: linear-gradient(135deg, rgb(25 113 194), rgb(13 148 136));
+  --gradient-secondary: linear-gradient(
+    135deg,
+    rgb(13 148 136),
+    rgb(34 197 94)
+  );
+  --gradient-accent: linear-gradient(135deg, rgb(234 179 8), rgb(249 115 22));
+  --gradient-logo: linear-gradient(
+    to right,
+    rgb(255 112 67),
+    rgb(255 167 38),
+    rgb(253 216 53)
+  );
+
+  /* Streamlined Spacing */
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
   --space-md: 1rem;
   --space-lg: 1.5rem;
   --space-xl: 2rem;
-  --space-2xl: 3rem;
-  --space-3xl: 4rem;
-  --space-4xl: 5rem;
-  --space-5xl: 6rem;
-  
-  /* Typography Scale with Modern Line Heights */
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.25rem;
-  --text-2xl: 1.5rem;
-  --text-3xl: 1.875rem;
-  --text-4xl: 2.25rem;
-  --text-5xl: 3rem;
-  
-  /* Advanced Border Radius */
-  --radius-xs: 0.125rem;
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
-  --radius-3xl: 2rem;
+
+  /* Border Radius */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.5rem;
   --radius-full: 9999px;
-  
-  /* Ultra-Modern Shadows */
-  --shadow-glow: 0 0 20px rgba(var(--accent-glow), 0.3);
-  --shadow-neural: 0 8px 32px rgba(0, 0, 0, 0.12);
-  --shadow-float: 0 20px 40px rgba(0, 0, 0, 0.1);
-  --shadow-intense: 0 25px 50px rgba(0, 0, 0, 0.25);
-  
-  /* EPC Project Management Colors */
-  --epc-primary: 34 197 94;
-  --epc-secondary: 59 130 246;
-  --epc-accent: 168 85 247;
-  --epc-success: 16 185 129;
-  --epc-warning: 251 191 36;
-  --epc-danger: 239 68 68;
-  
-  /* Phase Colors */
-  --engineering: 59 130 246;
-  --procurement: 168 85 247;
-  --construction: 34 197 94;
-  
-  /* Status Indicators */
-  --status-planning: 251 191 36;
-  --status-active: 59 130 246;
-  --status-hold: 251 146 60;
-  --status-completed: 34 197 94;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 4px 6px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 10px 15px rgba(15, 23, 42, 0.1);
+
+  /* Status Colors */
+  --status-active: 34 197 94;
+  --status-completed: 14 165 233;
+  --status-planning: 234 179 8;
   --status-cancelled: 239 68 68;
-
-  /* Shadcn/ui Semantic Colors */
-  --primary: 37 99 235;
-  --primary-foreground: 255 255 255;
-  --secondary: 241 245 249;
-  --secondary-foreground: 15 23 42;
-  --destructive: 239 68 68;
-  --destructive-foreground: 255 255 255;
-  --ring: 37 99 235;
-  --input: 226 232 240;
-  --card: 255 255 255;
-  --card-foreground: 15 23 42;
-  --popover: 255 255 255;
-  --popover-foreground: 15 23 42;
 }
 
+/* ---- Dark Mode Variables ---- */
 .dark {
-  --background: 5 5 7;
-  --background-subtle: 10 10 12;
-  --background-accent: 15 15 17;
-  --background-glass: 20 20 23;
-  --foreground: 250 250 250;
-  --muted: 39 39 42;
-  --muted-foreground: 161 161 170;
-  --border: 39 39 42;
-  --accent: 59 130 246;
-  --accent-foreground: 9 9 11;
-  --accent-glow: 59 130 246;
-
-  /* Shadcn/ui Dark Mode Colors */
-  --primary: 59 130 246;
-  --primary-foreground: 9 9 11;
-  --secondary: 39 39 42;
-  --secondary-foreground: 250 250 250;
-  --destructive: 239 68 68;
-  --destructive-foreground: 255 255 255;
-  --ring: 59 130 246;
-  --input: 39 39 42;
-  --card: 10 10 12;
-  --card-foreground: 250 250 250;
-  --popover: 10 10 12;
-  --popover-foreground: 250 250 250;
+  --background: 15 23 42;
+  --background-subtle: 30 41 59;
+  --background-accent: 51 65 85;
+  --background-glass: 15 23 42;
+  --foreground: 248 250 252;
+  --muted: 51 65 85;
+  --muted-foreground: 148 163 184;
+  --border: 51 65 85;
+  --accent: 56 189 248;
+  --accent-foreground: 15 23 42;
 }
 
-/* Base Styles - Outstanding Typography */
-* {
-  border-color: rgb(var(--border));
+/* ---- Base Styles ---- */
+html {
+  scroll-behavior: smooth;
+  font-family: "Inter", sans-serif;
 }
 
 body {
-  background: 
-    radial-gradient(ellipse at top left, rgba(var(--accent-glow), 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at bottom right, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
-    linear-gradient(135deg, 
-      rgb(var(--background)) 0%, 
-      rgb(var(--background-subtle)) 50%, 
-      rgb(var(--background-accent)) 100%);
-  background-attachment: fixed;
-  color: rgb(var(--foreground));
-  font-feature-settings: "rlig" 1, "calt" 1;
-  font-optical-sizing: auto;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* Ultra-Modern Background Effects */
-.bg-neural {
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(var(--accent-glow), 0.2) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
-    linear-gradient(135deg, rgb(var(--background)), rgb(var(--background-accent)));
-}
-
-.bg-mesh-ultra {
-  background-image: 
-    radial-gradient(circle at 1px 1px, rgba(var(--accent-glow), 0.15) 1px, transparent 0);
-  background-size: 40px 40px;
-  animation: mesh-float 20s ease-in-out infinite;
-}
-
-.bg-grain {
-  background-image: 
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-}
-
-/* Ultra-Modern Button Styles */
-.btn-primary {
-  background: var(--gradient-primary);
-  color: rgb(var(--accent-foreground));
-  padding: var(--space-sm) var(--space-xl);
-  border-radius: var(--radius-xl);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: var(--shadow-neural);
-}
-
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
-  opacity: 0;
-  transition: opacity 300ms ease;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: var(--shadow-float);
-}
-
-.btn-primary:hover::before {
-  opacity: 1;
-}
-
-.btn-primary:active {
-  transform: translateY(0) scale(0.98);
-}
-
-.btn-secondary {
-  background: rgba(var(--background-glass), 0.8);
-  backdrop-filter: blur(12px);
-  color: rgb(var(--foreground));
-  padding: var(--space-sm) var(--space-xl);
-  border-radius: var(--radius-xl);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  border: 1px solid rgba(var(--border), 0.5);
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-secondary:hover {
-  background: rgba(var(--background-glass), 0.95);
-  transform: translateY(-1px);
-  border-color: rgba(var(--accent), 0.3);
-  box-shadow: var(--shadow-neural);
-}
-
-/* Gradient Text Effects */
-.text-gradient {
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-gradient-secondary {
-  background: var(--gradient-secondary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Minimal Input Styles */
-.input-minimal {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgb(var(--border));
-  padding: var(--space-sm) 0;
-  font-size: var(--text-base);
-  color: rgb(var(--foreground));
-  outline: none;
-  transition: border-color 150ms ease;
-}
-
-.input-minimal:focus {
-  border-bottom-color: rgb(var(--accent));
-}
-
-.input-minimal::placeholder {
-  color: rgb(var(--muted-foreground));
-}
-
-/* Ultra-Modern Card Styles */
-.card-neural {
-  background: rgba(var(--background-glass), 0.7);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(var(--border), 0.2);
-  border-radius: var(--radius-2xl);
-  padding: var(--space-2xl);
-  position: relative;
-  overflow: hidden;
-  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: var(--shadow-neural);
-}
-
-.card-neural::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(var(--accent-glow), 0.1) 0%, transparent 50%);
-  opacity: 0;
-  transition: opacity 400ms ease;
-}
-
-.card-neural:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: var(--shadow-float);
-  border-color: rgba(var(--accent), 0.3);
-}
-
-.card-neural:hover::before {
-  opacity: 1;
-}
-
-.card-glow {
-  background: rgba(var(--background-glass), 0.8);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(var(--border), 0.3);
-  border-radius: var(--radius-2xl);
-  padding: var(--space-xl);
-  position: relative;
-  overflow: hidden;
-  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: var(--shadow-neural);
-}
-
-.card-glow:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-glow), var(--shadow-float);
-}
-
-.card-minimal {
-  background: rgba(var(--background), 0.8);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(var(--border), 0.5);
-  border-radius: var(--radius-lg);
-  padding: var(--space-xl);
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -1px rgb(0 0 0 / 0.06);
-  transition: all 150ms ease;
-}
-
-.card-minimal:hover {
-  background: rgba(var(--background), 0.95);
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05);
-  transform: translateY(-2px);
-}
-
-/* Enhanced Glass Effect Cards */
-.card-glass {
-  background: rgba(var(--background), 0.7);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(var(--border), 0.3);
-  border-radius: var(--radius-lg);
-  padding: var(--space-xl);
-  box-shadow: 
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-  transition: all 200ms ease;
-}
-
-.card-glass:hover {
-  background: rgba(var(--background), 0.85);
-  transform: translateY(-4px);
-  box-shadow: 
-    0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
-}
-
-/* Clean Section Dividers */
-.divider {
-  width: 100%;
-  height: 1px;
-  background-color: rgb(var(--border));
-  margin: var(--space-2xl) 0;
-}
-
-/* Outstanding Navigation */
-.nav-link {
-  color: rgb(var(--muted-foreground));
-  text-decoration: none;
-  font-size: var(--text-sm);
-  font-weight: 500;
-  padding: var(--space-sm) 0;
-  transition: color 150ms ease;
-  position: relative;
-}
-
-.nav-link:hover {
+  background-color: rgb(var(--background));
   color: rgb(var(--foreground));
 }
 
-.nav-link.active {
-  color: rgb(var(--accent));
+::selection {
+  background-color: rgb(255, 167, 38); /* Amber tone from logo */
+  color: #0f172a; /* Slate-900 dark */
 }
 
-.nav-link.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: rgb(var(--accent));
+/* ---- Custom Scrollbar ---- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-/* Clean List Styles */
-.list-minimal {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+::-webkit-scrollbar-track {
+  background: #f1f5f9; /* slate-100 */
 }
 
-.list-item {
-  padding: var(--space-lg);
-  margin-bottom: var(--space-sm);
-  background: rgba(var(--background), 0.6);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(var(--border), 0.3);
-  border-radius: var(--radius-md);
-  transition: all 150ms ease;
+::-webkit-scrollbar-thumb {
+  background-color: #ffa726; /* Logo amber */
+  border-radius: 20px;
+  border: 2px solid #f1f5f9;
 }
 
-.list-item:last-child {
-  margin-bottom: 0;
-}
-
-.list-item:hover {
-  background: rgba(var(--background), 0.8);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-/* Ultra-Modern Typography System */
-.heading-1 {
-  font-size: var(--text-5xl);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.05em;
-  color: rgb(var(--foreground));
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.heading-2 {
-  font-size: var(--text-3xl);
-  font-weight: 650;
-  line-height: 1.2;
-  letter-spacing: -0.025em;
-  color: rgb(var(--foreground));
-}
-
-.heading-3 {
-  font-size: var(--text-2xl);
-  font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: -0.015em;
-  color: rgb(var(--foreground));
-}
-
-.heading-4 {
-  font-size: var(--text-xl);
-  font-weight: 600;
-  line-height: 1.4;
-  color: rgb(var(--foreground));
-}
-
-.text-hero {
-  font-size: var(--text-4xl);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.04em;
-  background: var(--gradient-neural);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-muted {
-  color: rgb(var(--muted-foreground));
-  font-size: var(--text-sm);
-  font-weight: 450;
-}
-
-.text-accent {
-  color: rgb(var(--accent));
-  font-weight: 550;
-}
-
-.text-label {
-  font-size: var(--text-xs);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: rgb(var(--muted-foreground));
-}
-
-/* Outstanding Spacing Utilities */
-.section-spacing {
-  padding: var(--space-3xl) 0;
-}
-
-.content-spacing {
-  padding: 0 var(--space-xl);
-}
-
-.stack-sm > * + * {
-  margin-top: var(--space-sm);
-}
-
-.stack-md > * + * {
-  margin-top: var(--space-md);
-}
-
-.stack-lg > * + * {
-  margin-top: var(--space-lg);
-}
-
-.stack-xl > * + * {
-  margin-top: var(--space-xl);
-}
-
-/* Ultra-Modern Animation System */
-.fade-in {
-  animation: fadeInUp 600ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-.fade-in-delayed {
-  animation: fadeInUp 600ms cubic-bezier(0.4, 0, 0.2, 1) 200ms forwards;
-  opacity: 0;
-}
-
-.slide-in {
-  animation: slideIn 800ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-.scale-in {
-  animation: scaleIn 500ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-.float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.pulse-glow {
-  animation: pulseGlow 2s ease-in-out infinite;
-}
-
-.rotate-slow {
-  animation: rotateSlow 20s linear infinite;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(var(--accent-glow), 0.3);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(var(--accent-glow), 0.6);
-  }
-}
-
-@keyframes rotateSlow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes mesh-float {
-  0%, 100% {
-    transform: translateX(0) translateY(0);
-  }
-  33% {
-    transform: translateX(30px) translateY(-30px);
-  }
-  66% {
-    transform: translateX(-20px) translateY(20px);
-  }
-}
-
-.scale-hover {
-  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.scale-hover:hover {
-  transform: scale(1.05) translateY(-2px);
-}
-
-/* Micro-interaction Effects */
-.magnetic {
-  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.magnetic:hover {
-  transform: scale(1.1);
-}
-
-.tilt {
-  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.tilt:hover {
-  transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
-}
-
-/* Outstanding Status Indicators */
-.status-online {
-  color: #10b981;
-  font-size: var(--text-xs);
-  font-weight: 500;
-}
-
-.status-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: #10b981;
-  display: inline-block;
-  margin-right: var(--space-xs);
-}
-
-/* Clean Focus States */
-.focus-outline:focus {
-  outline: 2px solid rgb(var(--accent));
-  outline-offset: 2px;
-}
-
-/* Outstanding Container */
-.container-outstanding {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--space-xl);
-}
-
-/* Responsive Breakpoints */
-@media (max-width: 768px) {
-  .container-outstanding {
-    padding: 0 var(--space-md);
-  }
-  
-  .heading-1 {
-    font-size: var(--text-2xl);
-  }
-  
-  .section-spacing {
-    padding: var(--space-2xl) 0;
-  }
-}
-
-/* EPC Specific Utility Classes */
-.epc-phase-engineering {
-  color: rgb(var(--engineering));
-  border-color: rgb(var(--engineering));
-}
-
-.epc-phase-procurement {
-  color: rgb(var(--procurement));
-  border-color: rgb(var(--procurement));
-}
-
-.epc-phase-construction {
-  color: rgb(var(--construction));
-  border-color: rgb(var(--construction));
-}
-
-.epc-status-active {
+/* ---- Status Badges ---- */
+.status-badge-green {
   background-color: rgba(var(--status-active), 0.1);
   color: rgb(var(--status-active));
   border: 1px solid rgba(var(--status-active), 0.2);
 }
 
-.epc-status-completed {
+.status-badge-blue {
   background-color: rgba(var(--status-completed), 0.1);
   color: rgb(var(--status-completed));
   border: 1px solid rgba(var(--status-completed), 0.2);
 }
 
-.epc-status-planning {
+.status-badge-yellow {
   background-color: rgba(var(--status-planning), 0.1);
   color: rgb(var(--status-planning));
   border: 1px solid rgba(var(--status-planning), 0.2);
 }
 
-.epc-priority-critical {
-  background-color: rgba(var(--epc-danger), 0.1);
-  color: rgb(var(--epc-danger));
-  border: 1px solid rgba(var(--epc-danger), 0.2);
+.status-badge-red {
+  background-color: rgba(var(--status-cancelled), 0.1);
+  color: rgb(var(--status-cancelled));
+  border: 1px solid rgba(var(--status-cancelled), 0.2);
 }
 
-.epc-priority-high {
-  background-color: rgba(var(--epc-warning), 0.1);
-  color: rgb(var(--epc-warning));
-  border: 1px solid rgba(var(--epc-warning), 0.2);
-}
-
+/* ---- Progress Bar ---- */
 .progress-bar {
   width: 100%;
   height: 8px;
@@ -734,37 +146,91 @@ body {
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, rgb(var(--epc-primary)), rgb(var(--epc-accent)));
+  background: var(--gradient-primary);
   border-radius: var(--radius-full);
   transition: width 0.3s ease;
 }
 
-.epc-milestone-card {
-  background: rgba(var(--background-glass), 0.8);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(var(--border), 0.5);
-  border-radius: var(--radius-lg);
-  padding: var(--space-md);
+/* ---- Railway Gradient Utilities ---- */
+.bg-railway-gradient {
+  background-image: linear-gradient(to right, #ff7043, #ffa726, #fdd835);
+}
+
+.text-railway-gradient {
+  background-image: linear-gradient(to right, #ff7043, #ffa726, #fdd835);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.border-railway {
+  border-color: #ffa726;
+}
+
+.shadow-railway {
+  box-shadow: 0 4px 12px rgba(255, 167, 38, 0.2);
+}
+
+/* ---- Railway Button Variants ---- */
+.btn-railway-primary {
+  background-image: linear-gradient(to right, #ff7043, #ffa726, #fdd835);
+  color: #0f172a;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(255, 167, 38, 0.3);
+}
+
+.btn-railway-primary:hover {
+  box-shadow: 0 4px 15px rgba(255, 167, 38, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-railway-secondary {
+  background-color: transparent;
+  border: 2px solid #ffa726;
+  color: #ffa726;
+  font-weight: 500;
   transition: all 0.3s ease;
 }
 
-.epc-milestone-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-neural);
-  border-color: rgba(var(--accent), 0.5);
+.btn-railway-secondary:hover {
+  background-color: rgba(255, 167, 38, 0.1);
 }
 
-.risk-severity-high {
-  background: linear-gradient(135deg, rgba(var(--epc-danger), 0.1), rgba(var(--epc-warning), 0.1));
-  border-left: 4px solid rgb(var(--epc-danger));
+/* ---- Railway Card Component ---- */
+.card-railway {
+  border: 1px solid rgba(226, 232, 240, 0.5);
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.risk-severity-medium {
-  background: linear-gradient(135deg, rgba(var(--epc-warning), 0.1), rgba(var(--epc-secondary), 0.1));
-  border-left: 4px solid rgb(var(--epc-warning));
+.card-railway:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.1);
+  border-color: rgba(255, 167, 38, 0.3);
 }
 
-.risk-severity-low {
-  background: linear-gradient(135deg, rgba(var(--epc-success), 0.1), rgba(var(--epc-primary), 0.1));
-  border-left: 4px solid rgb(var(--epc-success));
+/* ---- Railway Table Component ---- */
+.table-railway {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table-railway th {
+  background-color: rgba(248, 250, 252, 0.5);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.5rem 1rem;
+  border-bottom: 2px solid rgba(255, 167, 38, 0.3);
+}
+
+.table-railway td {
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+}
+
+.table-railway tr:hover td {
+  background-color: rgba(255, 167, 38, 0.05);
 }
