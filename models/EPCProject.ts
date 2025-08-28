@@ -287,15 +287,25 @@ EPCProjectSchema.methods.calculateHealthScore = function () {
     this.resources.budget.spent / this.resources.budget.total;
   if (budgetUtilization > 1.1) score -= 15;
 
+  // Define types for the risks and inspections
+  interface Risk {
+    probability: string;
+    status: string;
+  }
+
+  interface Inspection {
+    status: string;
+  }
+
   // Deduct for open high-risk items
   const highRisks = this.risks.filter(
-    (r: unknown) => r.probability === "high" && r.status === "open"
+    (r: Risk) => r.probability === "high" && r.status === "open"
   );
   score -= highRisks.length * 10;
 
   // Deduct for failed inspections
   const failedInspections = this.qualityControl.inspections.filter(
-    (i: unknown) => i.status === "failed"
+    (i: Inspection) => i.status === "failed"
   );
   score -= failedInspections.length * 5;
 
