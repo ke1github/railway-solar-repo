@@ -22,6 +22,17 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         railway:
           "bg-railway-gradient text-slate-900 font-medium shadow-md hover:shadow-lg hover:translate-y-[-2px] transition-all duration-200",
+        "railway-muted":
+          "bg-railway-gradient-muted text-slate-900 font-medium shadow-sm hover:shadow-md hover:translate-y-[-1px] transition-all duration-200",
+        // New subtler variants
+        subtle:
+          "bg-background-subtle text-foreground border-standard shadow-sm hover:bg-background-accent hover:translate-y-[-1px] transition-all duration-200",
+        muted:
+          "bg-muted text-muted-foreground shadow-sm hover:bg-muted/80 hover:text-foreground hover:translate-y-[-1px] transition-all duration-200",
+        soft: "bg-primary/10 text-primary hover:bg-primary/20 hover:translate-y-[-1px] transition-all duration-200",
+        "soft-destructive":
+          "bg-destructive/10 text-destructive hover:bg-destructive/20 hover:translate-y-[-1px] transition-all duration-200",
+        flat: "bg-background-accent text-foreground hover:bg-accent/30 hover:translate-y-[-1px] transition-all duration-200",
       },
       size: {
         default: "h-10 px-4 py-2 has-[>svg]:px-3",

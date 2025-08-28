@@ -60,6 +60,12 @@
     rgb(255 167 38),
     rgb(253 216 53)
   );
+  --gradient-railway-muted: linear-gradient(
+    to right,
+    rgba(255, 112, 67, 0.6),
+    rgba(255, 167, 38, 0.6),
+    rgba(253, 216, 53, 0.6)
+  );
 
   /* Streamlined Spacing */
   --space-xs: 0.25rem;
@@ -232,6 +238,10 @@ body {
 /* ---- Railway Gradient Utilities ---- */
 .bg-railway-gradient {
   background-image: var(--gradient-railway);
+}
+
+.bg-railway-gradient-muted {
+  background-image: var(--gradient-railway-muted);
 }
 
 .text-railway-gradient {
