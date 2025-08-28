@@ -132,9 +132,7 @@ export default function AISiteOptimizer() {
             </p>
           </div>
           <Link href="/ai">
-            <Button className="bg-blue-600 hover:bg-blue-700">
-              Back to AI Dashboard
-            </Button>
+            <Button variant="railway">Back to AI Dashboard</Button>
           </Link>
         </div>
 

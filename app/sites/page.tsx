@@ -51,7 +51,7 @@ export default async function SitesPage() {
               </h3>
               <p className="text-muted-foreground mb-6">{sitesResult.error}</p>
               <Link href="/sites/new">
-                <Button>Add First Site</Button>
+                <Button variant="railway">Add First Site</Button>
               </Link>
             </Card>
           </div>
@@ -77,9 +77,7 @@ export default async function SitesPage() {
             </p>
           </div>
           <Link href="/sites/new">
-            <Button className="bg-blue-600 hover:bg-blue-700">
-              Add New Site
-            </Button>
+            <Button variant="railway">Add New Site</Button>
           </Link>
         </div>
 
@@ -139,9 +137,7 @@ export default async function SitesPage() {
               Get started by adding your first railway solar site.
             </p>
             <Link href="/sites/new">
-              <Button className="bg-blue-600 hover:bg-blue-700">
-                Add Your First Site
-              </Button>
+              <Button variant="railway">Add Your First Site</Button>
             </Link>
           </div>
         ) : (
@@ -213,10 +209,7 @@ export default async function SitesPage() {
                       </Button>
                     </Link>
                     <Link href={`/sites/${site.id}/edit`} className="flex-1">
-                      <Button
-                        className="w-full bg-blue-600 hover:bg-blue-700"
-                        size="sm"
-                      >
+                      <Button variant="railway" className="w-full" size="sm">
                         Edit
                       </Button>
                     </Link>

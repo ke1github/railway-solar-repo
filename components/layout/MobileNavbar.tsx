@@ -23,7 +23,7 @@ export function MobileNavbar() {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-md border-t border-border/50 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] lg:hidden">
+    <div className="fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-md shadow-[0_-2px_10px_rgba(0,0,0,0.05)] lg:hidden">
       <div className="flex justify-around items-center py-3">
         {navItems.map((item) => {
           const Icon = item.icon;

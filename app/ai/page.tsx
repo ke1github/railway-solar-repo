@@ -22,7 +22,7 @@ export default async function AIHierarchyPage() {
               </h3>
               <p className="text-muted-foreground mb-6">{zonesResult.error}</p>
               <Link href="/admin/zones/new">
-                <Button>Add First Zone</Button>
+                <Button variant="railway">Add First Zone</Button>
               </Link>
             </Card>
           </div>
@@ -67,7 +67,7 @@ export default async function AIHierarchyPage() {
                       No railway zones configured yet
                     </p>
                     <Link href="/admin/zones/new">
-                      <Button>Add First Zone</Button>
+                      <Button variant="railway">Add First Zone</Button>
                     </Link>
                   </div>
                 ) : (
@@ -91,8 +91,8 @@ export default async function AIHierarchyPage() {
                               Zone Code: {zone.code}
                             </div>
                             <div className="flex justify-between text-sm">
-                              <span>Divisions: {zone.totalDivisions}</span>
-                              <span>Stations: {zone.totalStations}</span>
+                              <span>Divisions: {zone.divisionsCount || 0}</span>
+                              <span>Stations: {zone.stationsCount || 0}</span>
                             </div>
                           </CardContent>
                         </Card>

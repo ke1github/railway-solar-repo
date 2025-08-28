@@ -10,7 +10,8 @@
     "db:seed": "tsx scripts/seed-database.ts",
     "db:status": "tsx scripts/check-database-status.ts",
     "epc:seed": "tsx scripts/seed-epc-projects.ts",
-    "setup:complete": "npm run db:seed && npm run epc:seed"
+    "setup:complete": "npm run db:seed && npm run epc:seed",
+    "migrate": "tsx scripts/migrateToAppwrite.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
@@ -22,11 +23,13 @@
     "@radix-ui/react-toggle": "^1.1.9",
     "@radix-ui/react-toggle-group": "^1.1.10",
     "@types/chart.js": "^2.9.41",
+    "appwrite": "^19.0.0",
     "chart.js": "^4.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "dotenv": "^17.2.0",
+    "framer-motion": "^12.23.12",
     "lucide-react": "^0.525.0",
     "mongodb": "^6.17.0",
     "mongoose": "^8.16.4",
@@ -38,6 +41,7 @@
     "recharts": "^2.15.4",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1",
+    "uuid": "^11.1.0",
     "zod": "^4.0.14"
   },
   "devDependencies": {
@@ -47,6 +51,7 @@
     "@types/node": "^20.19.9",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/uuid": "^10.0.0",
     "autoprefixer": "^10.4.21",
     "eslint": "^9",
     "eslint-config-next": "15.4.2",

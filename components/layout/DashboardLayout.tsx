@@ -11,7 +11,7 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background-subtle to-background-accent">
       {/* Sidebar */}
       <Sidebar />
 
@@ -30,7 +30,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         )}
       >
         <div className="container mx-auto px-4 max-w-5xl">
-          <div className="relative z-10 backdrop-blur-sm bg-background/40 rounded-xl p-6 shadow-sm border border-border/50">
+          <div className="relative z-10 backdrop-blur-sm bg-background/60 dark:bg-background-subtle/30 rounded-xl p-6 shadow-md">
             {children}
           </div>
         </div>

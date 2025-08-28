@@ -1,10 +1,10 @@
 // app/epc/page.tsx
-import React from 'react';
-import Link from 'next/link';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { getEPCDashboardStats } from '@/lib/actions/epc-actions';
+import React from "react";
+import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { getEPCDashboardStats } from "@/lib/actions/epc-actions";
 
 interface ProjectItem {
   projectId: string;
@@ -15,7 +15,7 @@ interface ProjectItem {
 }
 
 // Force dynamic rendering for this page
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default async function EPCPage() {
   const result = await getEPCDashboardStats();
@@ -26,10 +26,12 @@ export default async function EPCPage() {
         <div className="container mx-auto px-6 py-8">
           <div className="flex justify-center items-center min-h-[400px]">
             <Card className="p-8 text-center max-w-md">
-              <h3 className="text-xl font-semibold mb-4 text-red-600">Error Loading EPC Dashboard</h3>
+              <h3 className="text-xl font-semibold mb-4 text-red-600">
+                Error Loading EPC Dashboard
+              </h3>
               <p className="text-muted-foreground mb-6">{result.error}</p>
               <Link href="/epc/projects/new">
-                <Button>Create First Project</Button>
+                <Button variant="railway">Create First Project</Button>
               </Link>
             </Card>
           </div>
@@ -46,10 +48,14 @@ export default async function EPCPage() {
         <div className="container mx-auto px-6 py-8">
           <div className="flex justify-center items-center min-h-[400px]">
             <Card className="p-8 text-center max-w-md">
-              <h3 className="text-xl font-semibold mb-4 text-yellow-600">No EPC Data</h3>
-              <p className="text-muted-foreground mb-6">No EPC projects found in the system.</p>
+              <h3 className="text-xl font-semibold mb-4 text-yellow-600">
+                No EPC Data
+              </h3>
+              <p className="text-muted-foreground mb-6">
+                No EPC projects found in the system.
+              </p>
               <Link href="/epc/projects/new">
-                <Button>Create First Project</Button>
+                <Button variant="railway">Create First Project</Button>
               </Link>
             </Card>
           </div>
@@ -59,19 +65,22 @@ export default async function EPCPage() {
   }
 
   const getHealthScoreColor = (score: number) => {
-    if (score >= 80) return 'text-green-600';
-    if (score >= 60) return 'text-yellow-600';
-    return 'text-red-600';
+    if (score >= 80) return "text-green-600";
+    if (score >= 60) return "text-yellow-600";
+    return "text-red-600";
   };
 
   const getPriorityColor = (priority: string) => {
     const colors = {
-      'low': 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400',
-      'medium': 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400',
-      'high': 'bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400',
-      'critical': 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400',
+      low: "bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400",
+      medium:
+        "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400",
+      high: "bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400",
+      critical: "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400",
     };
-    return colors[priority as keyof typeof colors] || 'bg-gray-100 text-gray-800';
+    return (
+      colors[priority as keyof typeof colors] || "bg-gray-100 text-gray-800"
+    );
   };
 
   return (
@@ -85,19 +94,16 @@ export default async function EPCPage() {
             </h1>
             <div className="flex gap-3">
               <Link href="/epc/projects/new">
-                <Button>
-                  ➕ New Project
-                </Button>
+                <Button variant="railway">➕ New Project</Button>
               </Link>
               <Link href="/epc/projects">
-                <Button variant="outline">
-                  📋 All Projects
-                </Button>
+                <Button variant="outline">📋 All Projects</Button>
               </Link>
             </div>
           </div>
           <p className="text-xl text-muted-foreground">
-            Engineering • Procurement • Construction Management for Railway Solar Installations
+            Engineering • Procurement • Construction Management for Railway
+            Solar Installations
           </p>
         </div>
 
@@ -107,8 +113,12 @@ export default async function EPCPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Total Projects</p>
-                  <p className="text-3xl font-bold text-foreground">{data.overview.totalProjects}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Total Projects
+                  </p>
+                  <p className="text-3xl font-bold text-foreground">
+                    {data.overview.totalProjects}
+                  </p>
                 </div>
                 <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
                   🏗️
@@ -121,8 +131,12 @@ export default async function EPCPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Active Projects</p>
-                  <p className="text-3xl font-bold text-blue-600">{data.overview.activeProjects}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Active Projects
+                  </p>
+                  <p className="text-3xl font-bold text-blue-600">
+                    {data.overview.activeProjects}
+                  </p>
                 </div>
                 <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center">
                   ⚡
@@ -135,12 +149,17 @@ export default async function EPCPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Budget Utilization</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Budget Utilization
+                  </p>
                   <p className="text-3xl font-bold text-green-600">
-                    {data.overview.totalBudget > 0 
-                      ? `${Math.round((data.overview.totalSpent / data.overview.totalBudget) * 100)}%`
-                      : '0%'
-                    }
+                    {data.overview.totalBudget > 0
+                      ? `${Math.round(
+                          (data.overview.totalSpent /
+                            data.overview.totalBudget) *
+                            100
+                        )}%`
+                      : "0%"}
                   </p>
                 </div>
                 <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center">
@@ -154,8 +173,14 @@ export default async function EPCPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Avg Health Score</p>
-                  <p className={`text-3xl font-bold ${getHealthScoreColor(data.overview.avgHealthScore)}`}>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Avg Health Score
+                  </p>
+                  <p
+                    className={`text-3xl font-bold ${getHealthScoreColor(
+                      data.overview.avgHealthScore
+                    )}`}
+                  >
                     {Math.round(data.overview.avgHealthScore)}%
                   </p>
                 </div>
@@ -179,16 +204,19 @@ export default async function EPCPage() {
               <div className="space-y-4">
                 <div className="flex justify-between text-sm">
                   <span>In Progress</span>
-                  <span className="font-semibold">{data.phases.engineeringInProgress} projects</span>
+                  <span className="font-semibold">
+                    {data.phases.engineeringInProgress} projects
+                  </span>
                 </div>
                 <div className="w-full bg-muted rounded-full h-2">
-                  <div 
+                  <div
                     className="bg-blue-600 h-2 rounded-full transition-all duration-300"
                     style={{ width: `${data.phases.avgEngineeringProgress}%` }}
                   ></div>
                 </div>
                 <div className="text-xs text-muted-foreground text-center">
-                  Average Progress: {Math.round(data.phases.avgEngineeringProgress)}%
+                  Average Progress:{" "}
+                  {Math.round(data.phases.avgEngineeringProgress)}%
                 </div>
               </div>
             </CardContent>
@@ -204,16 +232,19 @@ export default async function EPCPage() {
               <div className="space-y-4">
                 <div className="flex justify-between text-sm">
                   <span>In Progress</span>
-                  <span className="font-semibold">{data.phases.procurementInProgress} projects</span>
+                  <span className="font-semibold">
+                    {data.phases.procurementInProgress} projects
+                  </span>
                 </div>
                 <div className="w-full bg-muted rounded-full h-2">
-                  <div 
+                  <div
                     className="bg-purple-600 h-2 rounded-full transition-all duration-300"
                     style={{ width: `${data.phases.avgProcurementProgress}%` }}
                   ></div>
                 </div>
                 <div className="text-xs text-muted-foreground text-center">
-                  Average Progress: {Math.round(data.phases.avgProcurementProgress)}%
+                  Average Progress:{" "}
+                  {Math.round(data.phases.avgProcurementProgress)}%
                 </div>
               </div>
             </CardContent>
@@ -229,16 +260,19 @@ export default async function EPCPage() {
               <div className="space-y-4">
                 <div className="flex justify-between text-sm">
                   <span>In Progress</span>
-                  <span className="font-semibold">{data.phases.constructionInProgress} projects</span>
+                  <span className="font-semibold">
+                    {data.phases.constructionInProgress} projects
+                  </span>
                 </div>
                 <div className="w-full bg-muted rounded-full h-2">
-                  <div 
+                  <div
                     className="bg-green-600 h-2 rounded-full transition-all duration-300"
                     style={{ width: `${data.phases.avgConstructionProgress}%` }}
                   ></div>
                 </div>
                 <div className="text-xs text-muted-foreground text-center">
-                  Average Progress: {Math.round(data.phases.avgConstructionProgress)}%
+                  Average Progress:{" "}
+                  {Math.round(data.phases.avgConstructionProgress)}%
                 </div>
               </div>
             </CardContent>
@@ -252,7 +286,9 @@ export default async function EPCPage() {
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 🚨 Critical Projects
-                <Badge variant="destructive">{data.criticalProjects.length}</Badge>
+                <Badge variant="destructive">
+                  {data.criticalProjects.length}
+                </Badge>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -262,22 +298,35 @@ export default async function EPCPage() {
                     ✅ No critical projects - All systems healthy!
                   </p>
                 ) : (
-                  data.criticalProjects.slice(0, 5).map((project: ProjectItem) => (
-                    <div key={project.projectId} className="flex items-center justify-between p-3 bg-red-50 dark:bg-red-900/10 rounded-lg">
-                      <div>
-                        <div className="font-semibold">{project.projectName}</div>
-                        <div className="text-sm text-muted-foreground">{project.projectId}</div>
-                      </div>
-                      <div className="text-right">
-                        <Badge className={getPriorityColor(project.priority)}>
-                          {project.priority.toUpperCase()}
-                        </Badge>
-                        <div className={`text-sm font-semibold ${getHealthScoreColor(project.healthScore)}`}>
-                          Health: {project.healthScore}%
+                  data.criticalProjects
+                    .slice(0, 5)
+                    .map((project: ProjectItem) => (
+                      <div
+                        key={project.projectId}
+                        className="flex items-center justify-between p-3 bg-red-50 dark:bg-red-900/10 rounded-lg"
+                      >
+                        <div>
+                          <div className="font-semibold">
+                            {project.projectName}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            {project.projectId}
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <Badge className={getPriorityColor(project.priority)}>
+                            {project.priority.toUpperCase()}
+                          </Badge>
+                          <div
+                            className={`text-sm font-semibold ${getHealthScoreColor(
+                              project.healthScore
+                            )}`}
+                          >
+                            Health: {project.healthScore}%
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))
+                    ))
                 )}
               </div>
               {data.criticalProjects.length > 5 && (
@@ -307,22 +356,35 @@ export default async function EPCPage() {
                     No recent projects found
                   </p>
                 ) : (
-                  data.recentProjects.slice(0, 5).map((project: ProjectItem) => (
-                    <div key={project.projectId} className="flex items-center justify-between p-3 bg-card rounded-lg border">
-                      <div>
-                        <div className="font-semibold">{project.projectName}</div>
-                        <div className="text-sm text-muted-foreground">{project.projectId}</div>
-                      </div>
-                      <div className="text-right">
-                        <div className={`text-sm font-semibold ${getHealthScoreColor(project.healthScore)}`}>
-                          {project.healthScore}%
+                  data.recentProjects
+                    .slice(0, 5)
+                    .map((project: ProjectItem) => (
+                      <div
+                        key={project.projectId}
+                        className="flex items-center justify-between p-3 bg-card rounded-lg border"
+                      >
+                        <div>
+                          <div className="font-semibold">
+                            {project.projectName}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            {project.projectId}
+                          </div>
                         </div>
-                        <div className="text-xs text-muted-foreground">
-                          {new Date(project.createdAt).toLocaleDateString()}
+                        <div className="text-right">
+                          <div
+                            className={`text-sm font-semibold ${getHealthScoreColor(
+                              project.healthScore
+                            )}`}
+                          >
+                            {project.healthScore}%
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {new Date(project.createdAt).toLocaleDateString()}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))
+                    ))
                 )}
               </div>
               {data.recentProjects.length > 5 && (

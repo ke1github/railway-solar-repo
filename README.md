@@ -18,16 +18,27 @@ A comprehensive Next.js application for managing solar installations across rail
 
 - **Frontend**: Next.js 15.4.2, React 19, TypeScript
 - **Styling**: Tailwind CSS, Radix UI components
-- **Database**: MongoDB Atlas with Mongoose ODM
+- **Data Layer**: Mock data (with planned Appwrite integration)
 - **API**: RESTful APIs with Next.js App Router
 - **Data**: 174 railway solar sites (2,411.5 kW total capacity)
+
+## Architecture
+
+This project uses a data adapter pattern to allow for flexible data source implementation:
+
+1. **Data Adapter** - Generic interface for data operations
+2. **Mock Data** - Currently using in-memory mock data
+3. **Data Service** - Domain-specific service layer
+4. **Future Integration** - Prepared for Appwrite backend integration
+
+See [DATA_ARCHITECTURE.md](./docs/DATA_ARCHITECTURE.md) for more details on the data architecture.
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js 18+
-- MongoDB Atlas account
+- Appwrite account (create one at [appwrite.io](https://appwrite.io))
 - Environment variables configured
 
 ### Installation
@@ -42,14 +53,17 @@ npm install
 3. Set up environment variables in `.env.local`:
 
 ```bash
-MONGODB_URI=your_mongodb_connection_string
+# Check .env.example for all required variables
+NEXT_PUBLIC_APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1
+NEXT_PUBLIC_APPWRITE_PROJECT_ID=your_appwrite_project_id
+NEXT_PUBLIC_APPWRITE_DATABASE_ID=your_appwrite_database_id
+NEXT_PUBLIC_APPWRITE_STORAGE_BUCKET_ID=your_appwrite_storage_bucket_id
 ```
 
-4. Seed the database:
+4. Set up Appwrite:
 
-```bash
-npm run db:seed
-```
+   - Create an Appwrite account and project
+   - Set up collections as described in `docs/APPWRITE_INTEGRATION.md`
 
 5. Start the development server:
 

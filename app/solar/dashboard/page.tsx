@@ -204,12 +204,7 @@ async function SolarSystemStats() {
                         />
                       </div>
                     </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="ml-auto"
-                      asChild
-                    >
+                    <Button variant="ghost" size="sm" asChild>
                       <a href={`/stations/${station.stationId}`}>View</a>
                     </Button>
                   </div>
@@ -270,7 +265,7 @@ export default function SolarDashboardPage() {
     <div className="container py-6">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold">Solar System Dashboard</h1>
-        <Button asChild>
+        <Button variant="railway" asChild>
           <Link href="/solar/installations/new">+ New Installation</Link>
         </Button>
       </div>

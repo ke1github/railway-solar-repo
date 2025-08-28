@@ -41,7 +41,7 @@ export function Sidebar({ className }: SidebarProps) {
       <div className="lg:hidden fixed top-4 left-4 z-50">
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="p-2 rounded-md bg-background text-foreground border border-border"
+          className="p-2 rounded-md bg-background text-foreground"
         >
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
@@ -50,17 +50,17 @@ export function Sidebar({ className }: SidebarProps) {
       {/* Sidebar for desktop */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 w-64 bg-background/95 backdrop-blur-sm border-r border-border/50 shadow-sm transition-transform lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-40 w-64 bg-background/90 backdrop-blur-md shadow-md transition-transform lg:translate-x-0",
           mobileOpen ? "translate-x-0" : "-translate-x-full",
           className
         )}
       >
         <div className="flex flex-col h-full">
           {/* Logo and Brand Header */}
-          <div className="py-6 px-5 border-b border-border/50 mb-6 bg-gradient-to-r from-primary/10 to-transparent">
+          <div className="py-6 px-5 mb-6 bg-gradient-to-r from-primary/15 to-transparent">
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 rounded-md bg-gradient-to-br from-solar-blue to-solar-teal flex items-center justify-center text-white">
-                <Sun size={18} className="animate-pulse" />
+              <div className="w-10 h-10 rounded-lg bg-railway-gradient flex items-center justify-center text-slate-900 shadow-railway">
+                <Sun size={20} className="animate-pulse" />
               </div>
               <h2 className="text-xl font-semibold tracking-tight">
                 Railway Solar
@@ -83,9 +83,9 @@ export function Sidebar({ className }: SidebarProps) {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "flex items-center px-4 py-3 text-sm rounded-md transition-all duration-200",
+                    "flex items-center px-4 py-3 text-sm rounded-lg transition-all duration-200",
                     isActive
-                      ? "bg-primary text-primary-foreground font-medium shadow-sm"
+                      ? "bg-railway-gradient text-slate-900 font-medium shadow-railway"
                       : "text-foreground hover:bg-background-accent hover:translate-x-1"
                   )}
                 >
@@ -101,8 +101,8 @@ export function Sidebar({ className }: SidebarProps) {
             })}
           </nav>
 
-          <div className="mt-auto pt-4 pb-4 px-3 border-t border-border/50 bg-background-subtle/50">
-            <div className="px-4 py-2 mb-3 rounded-md bg-background-accent/50 border border-border/50 text-xs text-muted-foreground">
+          <div className="mt-auto pt-4 pb-4 px-3 bg-background-subtle/50">
+            <div className="px-4 py-3 mb-3 rounded-lg bg-background-accent/50 text-xs text-muted-foreground">
               <p className="font-medium text-foreground mb-1">
                 Railway Solar v1.2.0
               </p>
@@ -110,7 +110,7 @@ export function Sidebar({ className }: SidebarProps) {
             </div>
             <Link
               href="/settings"
-              className="flex items-center px-4 py-3 text-sm rounded-md text-foreground hover:bg-background-accent group transition-all duration-200"
+              className="flex items-center px-4 py-3 text-sm rounded-lg text-foreground hover:bg-background-accent group transition-all duration-200"
             >
               <Settings className="mr-3 h-5 w-5 group-hover:rotate-90 transition-transform duration-300" />
               Settings
