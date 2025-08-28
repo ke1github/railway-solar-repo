@@ -30,7 +30,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         )}
       >
         <div className="container mx-auto px-4 max-w-5xl">
-          <div className="relative z-10 backdrop-blur-sm bg-background/60 dark:bg-background-subtle/30 rounded-xl p-6 shadow-md">
+          <div className="relative z-10 backdrop-blur-sm bg-background/60 dark:bg-background-subtle/30 rounded-xl p-6 shadow-md border-subtle">
             {children}
           </div>
         </div>

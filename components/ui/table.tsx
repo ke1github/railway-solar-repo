@@ -4,15 +4,36 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-function Table({ className, ...props }: React.ComponentProps<"table">) {
+interface TableProps extends React.ComponentProps<"table"> {
+  withBorder?: boolean;
+  borderStyle?: "subtle" | "standard" | "prominent";
+  withRowBorders?: boolean;
+}
+
+function Table({
+  className,
+  withBorder = false,
+  borderStyle = "standard",
+  withRowBorders = false,
+  ...props
+}: TableProps) {
   return (
     <div
       data-slot="table-container"
-      className="relative w-full overflow-x-auto"
+      className={cn(
+        "relative w-full overflow-x-auto rounded-md",
+        withBorder && borderStyle === "subtle" && "border-subtle",
+        withBorder && borderStyle === "standard" && "border-standard",
+        withBorder && borderStyle === "prominent" && "border-prominent"
+      )}
     >
       <table
         data-slot="table"
-        className={cn("w-full caption-bottom text-sm", className)}
+        className={cn(
+          "w-full caption-bottom text-sm",
+          withRowBorders && "[&_tr:not(:last-child)]:border-bottom",
+          className
+        )}
         {...props}
       />
     </div>

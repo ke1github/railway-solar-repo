@@ -9,6 +9,7 @@ import {
   ExternalLink,
   Mail,
   Info,
+  Paintbrush,
 } from "lucide-react";
 
 import { ModernTabList } from "@/components/ui/modern-tab-list";
@@ -87,6 +88,16 @@ export default function UIShowcasePage() {
           Showcase of reusable components designed for the Railway Solar project
           with consistent styling, animations, and responsive behaviors.
         </p>
+
+        <div className="flex flex-wrap gap-3 mb-6">
+          <ButtonLink
+            href="/ui-showcase/border-styling"
+            variant="outline"
+            icon={<Paintbrush className="size-4" />}
+          >
+            Border Styling System
+          </ButtonLink>
+        </div>
       </div>
 
       {/* ModernTabList Component Showcase */}

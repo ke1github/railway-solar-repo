@@ -14,7 +14,7 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-white shadow-sm hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 hover:translate-y-[-1px] transition-all duration-200",
         outline:
-          "bg-background shadow-sm hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:hover:bg-input/50 hover:translate-y-[-1px] transition-all duration-200",
+          "border-standard bg-background shadow-sm hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:hover:bg-input/50 hover:translate-y-[-1px] transition-all duration-200",
         secondary:
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 hover:translate-y-[-1px] transition-all duration-200",
         ghost:
@@ -29,6 +29,12 @@ const buttonVariants = cva(
         lg: "h-12 rounded-lg px-6 has-[>svg]:px-4",
         icon: "h-10 w-10 rounded-lg",
       },
+      borderStyle: {
+        none: "border-0",
+        subtle: "border-subtle",
+        standard: "border-standard",
+        prominent: "border-prominent",
+      },
     },
     defaultVariants: {
       variant: "default",
@@ -37,22 +43,37 @@ const buttonVariants = cva(
   }
 );
 
+interface ButtonProps
+  extends React.ComponentProps<"button">,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
+  withBorder?: boolean;
+}
+
 function Button({
   className,
   variant,
   size,
+  borderStyle,
+  withBorder = variant === "outline",
   asChild = false,
   ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean;
-  }) {
+}: ButtonProps) {
   const Comp = asChild ? Slot : "button";
 
   return (
     <Comp
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(
+        buttonVariants({
+          variant,
+          size,
+          borderStyle: withBorder
+            ? borderStyle || (variant === "outline" ? "standard" : "subtle")
+            : "none",
+          className,
+        })
+      )}
       {...props}
     />
   );

@@ -14,6 +14,9 @@ const config: Config = {
       },
       colors: {
         border: "rgb(var(--border))",
+        "border-light": "rgb(var(--border-light))",
+        "border-medium": "rgb(var(--border-medium))",
+        "border-dark": "rgb(var(--border-dark))",
         input: "rgb(var(--border))",
         ring: "rgb(var(--accent))",
         background: "rgb(var(--background))",
@@ -46,6 +49,16 @@ const config: Config = {
       borderRadius: {
         xl: "1rem",
         "2xl": "1.25rem",
+      },
+      borderWidth: {
+        thin: "var(--border-width-thin)",
+        medium: "var(--border-width-medium)",
+        thick: "var(--border-width-thick)",
+      },
+      borderOpacity: {
+        subtle: "var(--border-opacity-subtle)",
+        medium: "var(--border-opacity-medium)",
+        full: "var(--border-opacity-full)",
       },
     },
   },

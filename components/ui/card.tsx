@@ -2,12 +2,25 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
+interface CardProps extends React.ComponentProps<"div"> {
+  withBorder?: boolean;
+  borderStyle?: "subtle" | "standard" | "prominent";
+}
+
+function Card({
+  className,
+  withBorder = false,
+  borderStyle = "standard",
+  ...props
+}: CardProps) {
   return (
     <div
       data-slot="card"
       className={cn(
         "bg-background/80 text-foreground flex flex-col gap-6 rounded-xl py-6 shadow-md hover:shadow-lg transition-all duration-300 dark:bg-background-subtle/90",
+        withBorder && borderStyle === "subtle" && "border-subtle",
+        withBorder && borderStyle === "standard" && "border-standard",
+        withBorder && borderStyle === "prominent" && "border-prominent",
         className
       )}
       {...props}
